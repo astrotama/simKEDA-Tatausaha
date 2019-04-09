@@ -1,0 +1,6 @@
+; $Id$
+name = "User SKPD"
+description = "User SKPD"
+;dependencies[] = 
+core = 7.x
+package="userskpd"

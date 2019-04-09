@@ -1,0 +1,6 @@
+; $Id$
+name = "Sumber Dana Module"
+description = "Penatausahaan - Sumber Dana Module"
+;dependencies[] = 
+core = 7.x
+package="simKEDA"

@@ -1,0 +1,44 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function tampil_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+ 
+function tampil_menu() {
+
+
+	$items['tampil'] = array (
+      'title' => 'Tampil',
+	  'description' => 'Tampil',
+	  'title callback' => 'tampil_title_callback',	  
+      'page callback' => 'tampil_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tampil_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+	    return $items;
+}
+
+
+function tampil_title_callback() {
+	return t('Tampil');
+}
+
+function tampil_title_callback() {
+    return t('Tampil');
+}

@@ -1,0 +1,78 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function sppup_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function sppup_menu() {
+
+	$items['sppup/new'] = array (
+      'title' => 'SPP UP',
+	  'description' => 'SPP UP',
+	  'title callback' => 'sppup_title_callback',	  
+      'page callback' => 'sppup_new_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'sppup_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['sppup/edit'] = array (
+      'title' => 'SPP UP',
+	  'description' => 'SPP UP',
+	  'title callback' => 'sppup_title_callback',	  
+      'page callback' => 'sppup_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'sppup_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['sppuparsip'] = array (
+      'title' => 'Daftar SPP UP',
+	  'description' => 'Daftar SPP UP',
+	  'title callback' => 'sppuparsip_title_callback',	  
+      'page callback' => 'sppuparsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'sppuparsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['sppup/delete'] = array (
+      'title' => 'Hapus SPP',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('sppup_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'sppup_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+
+    return $items;
+}
+
+
+function sppup_title_callback() {
+	return t('SPP UP');
+}
+
+function sppuparsip_title_callback() {
+    return t('Daftar SPP UP');
+}
+

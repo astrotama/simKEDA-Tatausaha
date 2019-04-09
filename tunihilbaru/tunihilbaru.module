@@ -1,0 +1,222 @@
+<?php
+// $Id$
+function tunihilbaru_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+function tunihilbaru_menu() {
+
+	
+	$items['tunihilbaruspp/new'] = array (
+      'title' => 'SPP TU Nihil | Baru',
+	  'description' => 'SPP TU Nihil | Baru',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'tunihilbaruspp_new_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilbaruspp_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilbaruspp/edit'] = array (
+      'title' => 'SPP TU Nihil',
+	  'description' => 'SPP TU Nihil | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'tunihilbaruspp_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilbaruspp_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilbaruspp/cetak'] = array (
+      'title' => 'SPP TU Nihil Cetak',
+	  'description' => 'SPP TU Nihil | Cetak',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'form_cetak_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'form_cetak_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilbaruspp/pilihkeg'] = array (
+      'title' => 'Pilih Kegiatan',
+	  'description' => 'Pilih Kegiatan',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'tunihilbaruspp_pilihkeg_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilbaruspp_pilihkeg_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+	$items['tunihilbaruspp/pilihkegspj'] = array (
+      'title' => 'Pilih SPJ',
+	  'description' => 'Pilih SPJ',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'tunihilbaruspp_pilihkegspj_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilbaruspp_pilihkegspj_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+	$items['tunihilbaruspp/verify'] = array (
+      'title' => 'Verifikasi SPP TU Nihil',
+	  'description' => 'Verifikasi SPP TU Nihil',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'tunihilbaruspp_verify_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilbaruspp_verify_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['tunihilbaru/new'] = array (
+      'title' => 'Usulan TU Nihil | Baru',
+	  'description' => 'Usulan TU Nihil | Baru',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_new_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilbaru/arsip'] = array (
+      'title' => 'Usulan TU Nihil | Arsip',
+	  'description' => 'Usulan TU Nihil | Arsip',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilbaru/edit'] = array (
+      'title' => 'Usulan TU Nihil | Edit',
+	  'description' => 'Usulan TU Nihil | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['tunihilbaru/selectkeg'] = array (
+      'title' => 'Usulan TU Nihil | Pilih Kegiatan',
+	  'description' => 'Usulan TU Nihil | Pilih Kegiatan',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_keg_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_keg_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+	$items['tunihilbaru/selectspj'] = array (
+      'title' => 'Usulan TU Nihil | Pilih',
+	  'description' => 'Usulan TU Nihil | Pilih',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_selectspj_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_selectspj_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilbaru/delete'] = array (
+      'title' => 'Usulan TU Nihil | Hapus',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('usulan_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'usulan_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+
+	$items['tunihilbaru/ajax'] = array (
+      'title' => 'Ajax',
+	  'description' => 'Ajax',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'ajax_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'ajax_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['tunihilbaru/select'] = array (
+      'title' => 'Pilih Usulan TU Nihil',
+	  'description' => 'Pilih Usulan TU Nihil',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_arsipselect_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_arsipselect_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+	//SPM
+	$items['tunihilbaruspm/edit'] = array (
+      'title' => 'SPM TU Nihil',
+	  'description' => 'SPM TU Nihil | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'tunihilbaruspm_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilbaruspm_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+	//SP2D
+	$items['tunihilbarusp2d/edit'] = array (
+      'title' => 'SP2D TU Nihil',
+	  'description' => 'SP2D TU Nihil | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'tunihilbarusp2d_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilbarusp2d_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+
+	//KUITANSI 
+	$items['tunihilkuitansi/edit'] = array (
+      'title' => 'Kuitansi A2-1',
+	  //'title callback' => 'laporan_title_callback',	  
+      'page callback' => 'tunihilkuitansi_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilkuitansi_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilkuitansi/edita2'] = array (
+      'title' => 'Kuitansi A2-2',
+	  //'title callback' => 'laporan_title_callback',	  
+      'page callback' => 'tunihilkuitansi_a22_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilkuitansi_a22_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+	
+    return $items;
+}
+
+?>	
+

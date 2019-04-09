@@ -1,0 +1,287 @@
+<?php
+
+function verifikasispm_menu() {
+	 
+  $items['verifikasispmgu'] = array(
+    'title' => t('Verifikasispm SPM'),
+	'page callback' => 'verifikasispmgu_form',
+    'access callback' => TRUE,
+  ); 
+
+  //verifikasispmgu_verify_form
+  $items['verifikasispmgu/into'] = array(
+    'title' => t('[0] Uraian'),
+	'page callback' => 'verifikasispmgu_form',
+	'type' => MENU_DEFAULT_LOCAL_TASK,		//MENU_CALLBACK,	
+	'access callback' => TRUE,
+  );
+  
+  $items['verifikasispmgu/main'] = array(
+      'title' => '[4] Verifikasi SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('verifikasispmgu_verify_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gubaruspm_verifikasi_form.php',
+      'type' => MENU_LOCAL_TASK,		//MENU_CALLBACK,	
+  );
+
+  $items['verifikasispmgu/spp2'] = array(
+      'title' => '[3] SPP2',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('verifikasispmgu_spp2_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gubaruspm_verifikasi_form.php',
+      'type' => MENU_LOCAL_TASK,		//MENU_CALLBACK,	
+  );
+
+  $items['verifikasispmgu/bk5'] = array(
+    'title' => t('[1] BK 5'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('verifikasispmgu_bk5_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gubaruspm_verifikasi_form.php',
+      'type' => MENU_LOCAL_TASK,		//MENU_CALLBACK,	
+  );
+
+  $items['verifikasispmgu/bk6'] = array(
+    'title' => t('[2] BK 6'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('verifikasispmgu_bk6_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gubaruspm_verifikasi_form.php',
+      'type' => MENU_LOCAL_TASK,		//MENU_CALLBACK,	
+  );
+
+  $items['verifikasispmgu/bk8'] = array(
+    'title' => t('[3] BK 8'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('verifikasispmgu_bk8_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gubaruspm_verifikasi_form.php',
+      'type' => MENU_LOCAL_TASK,		//MENU_CALLBACK,	
+  );
+  
+	//***
+  $items['verifikasispmguinfo'] = array(
+    'title' => t('Verifikasispm SPM'),
+	'page callback' => 'verifikasispmgu_form',
+    'access callback' => TRUE,
+  ); 
+
+  //verifikasispmgu_verify_form
+  $items['verifikasispmguinfo/into'] = array(
+    'title' => t('[0] Uraian'),
+	'page callback' => 'verifikasispmgu_form',
+	'type' => MENU_DEFAULT_LOCAL_TASK,		//MENU_CALLBACK,	
+	'access callback' => TRUE,
+  );
+  
+  $items['verifikasispmguinfo/spp2'] = array(
+      'title' => '[3] SPP2',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('verifikasispmgu_spp2_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gubaruspm_verifikasi_form.php',
+      'type' => MENU_LOCAL_TASK,		//MENU_CALLBACK,	
+  );
+
+  $items['verifikasispmguinfo/bk5'] = array(
+    'title' => t('[1] BK 5'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('verifikasispmgu_bk5_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gubaruspm_verifikasi_form.php',
+      'type' => MENU_LOCAL_TASK,		//MENU_CALLBACK,	
+  );
+
+  $items['verifikasispmguinfo/bk6'] = array(
+    'title' => t('[2] BK 6'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('verifikasispmgu_bk6_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gubaruspm_verifikasi_form.php',
+      'type' => MENU_LOCAL_TASK,		//MENU_CALLBACK,	
+  );
+
+  $items['verifikasispmguinfo/bk8'] = array(
+    'title' => t('[3] BK 8'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('verifikasispmgu_bk8_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gubaruspm_verifikasi_form.php',
+      'type' => MENU_LOCAL_TASK,		//MENU_CALLBACK,	
+  );
+  	
+  return $items;
+}
+
+function verifikasispmgu_form() {
+		
+	$dokid = arg(2);
+	if ($dokid=='') {
+		$dokid = $_SESSION["verifikasi_spm_gu"];
+	} else {
+		$_SESSION["verifikasi_spm_gu"] = $dokid;
+	}
+	
+	$m=0;
+	$res=db_query('select id,url from dokumenfile where dokid=:dokid', array(':dokid'=>$dokid));	
+	foreach($res as $dat){
+		if ($dat->url!='') {
+			$img = str_replace('sikeda', 'simkeda', $dat->url);
+			$dataimg[1][$m] = $dat->id;
+			$dataimg[0][$m] = $img;
+			
+			$m++;
+		}
+	}
+	//KEGIATAN
+	$nokeg = 0;
+	$reskeg = db_query('select kodekeg,kegiatan from {kegiatanskpd} where kodekeg in (select kodekeg from {dokumenrekening} where dokid=:dokid) order by kegiatan', array(':dokid'=>$dokid));
+	foreach ($reskeg as $datakeg) {
+		$nokeg++;
+		//REKENING
+		$kodekeg = $datakeg->kodekeg;
+
+		$bk6  = '<a href="/verifikasisppgu/bk6keg/' . $dokid . '/' . $datakeg->kodekeg . '">BK-6</a>';
+		$form['formrekening_bk5' . $datakeg->kodekeg] = array (
+			'#type' => 'fieldset',
+			'#title'=> $nokeg . '. ' . $datakeg->kegiatan . '<em><small class="text-info pull-right">' . $bk6 .  '</small></em>',
+			'#collapsible' => FALSE,
+			'#collapsed' => FALSE,
+		);
+		
+		$res=db_query('select spjlink from spjgu where dokid=:dokid and kodekeg=:kodekeg', array(':dokid'=>$dokid, ':kodekeg'=>$kodekeg));	
+		foreach($res as $dat){
+			$spjlink = $dat->spjlink;
+		}
+		// drupal_set_message('test'.$dokid.' '.$kodekeg);
+		
+		$form['formrekening_bk5' . $datakeg->kodekeg]['bk5'] = array(
+			'#prefix' => '<div class="col-md-12">',
+			'#suffix' => '</div>',
+		
+			'#type' => 'item',
+			'#markup' => $spjlink,
+		);	
+
+		// $form['formrekening_bk5' . $datakeg->kodekeg]['bk5'] = array (
+			// '#type' => 'item',
+			// '#markup' => verifikasi_bk5($dokid, $kodeuk, $datakeg->kodekeg, $tglawal, $tglakhir),
+		// );
+
+
+	}
+
+	$form['formdata']['submitback']= array(
+		'#type' => 'submit',
+		'#value' => '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Kembali ke SPM',
+		'#attributes' => array('class' => array('btn btn-danger btn-sm pull-right')),
+	);	
+	return $form;
+}
+
+function verifikasispmgu_form_submit() {
+	drupal_goto('');
+}
+
+function verifikasispm_bk6_is_ada_transaksi($kodekeg, $kodero, $tglawal, $tglakhir) {
+	
+	$jumlah = 0;
+	
+	$query = db_select('bendahara', 'b');
+	$query->innerJoin('bendaharaitem', 'bi', 'b.bendid=bi.bendid');
+	$query->addExpression('SUM(bi.jumlah)', 'total');
+	$query->condition('b.kodekeg', $kodekeg, '=');
+	$query->condition('bi.kodero', $kodero, '=');
+	$query->condition('bi.jumlah', 0, '<>');
+
+	$query->condition('b.tanggal', $tglawal, '>=');
+	$query->condition('b.tanggal', $tglakhir, '<=');
+	
+	$result = $query->execute();
+	foreach ($result as $data) {
+		$jumlah = $data->total;
+	}
+	
+	return ($jumlah>0);
+}
+
+function verifikasispm_bk6_read_sebelumnya($kodekeg, $kodero, $tglawal, &$ls, &$gu, &$tu) {
+	$ls = 0; $gu = 0; $tu = 0;
+	
+	//rea
+	$query = db_select('bendahara', 'b');
+	$query->innerJoin('bendaharaitem', 'bi', 'b.bendid=bi.bendid');
+	$query->fields('b', array('jenis'));
+	$query->addExpression('SUM(bi.jumlah)', 'total');
+	$query->condition('b.kodekeg', $kodekeg, '=');
+	$query->condition('bi.kodero', $kodero, '=');
+
+	$query->condition('b.tanggal', $tglawal, '<');
+	
+	$or = db_or();
+	$or->condition('b.jenis', 'gaji', '=');
+	$or->condition('b.jenis', 'ls', '=');
+	$or->condition('b.jenis', 'tu-spj', '=');
+	$or->condition('b.jenis', 'gu-spj', '=');
+	$or->condition('b.jenis', 'pindahbuku', '=');
+	$query->condition($or);
+	$query->groupBy('b.jenis');
+	
+	$result = $query->execute();
+	foreach ($result as $data_spj) {
+		
+		if ($data_spj->jenis == 'gu-spj')
+			$gu = $data_spj->total;
+		else if (($data_spj->jenis == 'ls') or ($data_spj->jenis == 'gaji'))
+			$ls += $data_spj->total;
+		else if ($data_spj->jenis == 'tu-spj')
+			$tu = $data_spj->total;
+		else {
+			if ($data_spj->jenispanjar == 'gu')
+				$gu = $data_spj->total;
+			else if ($data_spj->jenispanjar == 'ls') 
+				$ls = $data_spj->total;
+			else
+				$tu = $data_spj->total;
+			
+		}
+		
+	}	
+	
+	//ret
+	$query = db_select('bendahara', 'b');
+	$query->innerJoin('bendaharaitem', 'bi', 'b.bendid=bi.bendid');
+	$query->fields('b', array('jenispanjar'));
+	$query->addExpression('SUM(bi.jumlah)', 'total');
+	$query->condition('b.kodekeg', $kodekeg, '=');
+	$query->condition('bi.kodero', $kodero, '=');
+
+	$query->condition('b.tanggal', $tglawal, '<');
+	$query->condition('b.jenis', 'ret-spj', '=');
+	
+	$query->groupBy('b.jenispanjar');
+	
+	$result = $query->execute();
+	foreach ($result as $data_spj) {
+		
+		if ($data_spj->jenispanjar == 'gu')
+			$gu -= $data_spj->total;
+		else if ($data_spj->jenispanjar == 'ls') 
+			$ls -= $data_spj->total;
+		else
+			$tu -= $data_spj->total;
+		
+	}		
+}
+

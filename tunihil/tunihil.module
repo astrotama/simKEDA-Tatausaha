@@ -1,0 +1,172 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function tunihil_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function tunihil_menu() {
+//ITEM  (DB Tata U)
+	$items['tunihilspp/newkeg'] = array (
+      'title' => 'SPP TU Nihil | Pilih Kegiatan',
+	  'description' => 'SPP TU Nihil | Pilih Kegiatan',
+	  //'title callback' => 'tunihil_title_callback',	  
+      'page callback' => 'tunihilspp_newkeg_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilspp_newkeg_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilspp/newspj'] = array (
+      'title' => 'SPP TU Nihil | Pilih SPJ',
+	  'description' => 'SPP TU Nihil | Pilih SPJ',
+	  //'title callback' => 'tunihil_title_callback',	  
+      'page callback' => 'tunihilspp_newspj_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilspp_newspj_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	 
+	$items['tunihilspp/new'] = array (
+      'title' => 'SPP TU Nihil',
+	  'description' => 'SPP TU Nihil',
+	  //'title callback' => 'tunihil_title_callback',	  
+      'page callback' => 'tunihilspp_new_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilspp_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilspp/edit'] = array (
+      'title' => 'SPP TU Nihil',
+	  'description' => 'SPP TU Nihil',
+	  //'title callback' => 'tunihil_title_callback',	  
+      'page callback' => 'tunihilspp_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilspp_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilspparsip'] = array (
+      'title' => 'Daftar SPP TU Nihil',
+	  'description' => 'Daftar SPP TU Nihil',
+	  //'title callback' => 'tunihil_title_callback',	  
+      'page callback' => 'tunihilspp_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilspp_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+    $items['tunihilspp/delete'] = array (
+      'title' => 'Hapus SPP',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('tunihilspp_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'tunihilspp_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+	 
+	$items['tunihilspmarsip'] = array (
+      'title' => 'Daftar SPM TU Nihil',
+	  'description' => 'Daftar SPM TU Nihil',
+	  //'title callback' => 'tunihil_title_callback',	  
+      'page callback' => 'tunihilspm_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilspm_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tunihilspm/edit'] = array (
+      'title' => 'SPM TU Nihil',
+	  'description' => 'SPM TU Nihil',
+	  //'title callback' => 'tunihil_title_callback',	  
+      'page callback' => 'tunihilspm_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilspm_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+    $items['tunihilspm/verify'] = array (
+      'title' => 'Verifikasi SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('tunihilspm_verify_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'tunihilspm_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );
+	
+    $items['tunihilspm/delete'] = array (
+      'title' => 'Hapus SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('tunihilspm_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'tunihilspm_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+
+	$items['tunihilsp2darsip'] = array (
+      'title' => 'Daftar SP2D TU Nihil',
+	  'description' => 'Daftar SP2D TU Nihil',
+	  //'title callback' => 'tunihilsp2d_arsip_title_callback',	  
+      'page callback' => 'tunihilsp2d_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilsp2d_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['tunihilsp2d/edit'] = array (
+      'title' => 'SP2D TU Nihil',
+	  'description' => 'SP2D TU Nihil',
+	  //'title callback' => 'tunihilsp2d_title_callback',	  
+      'page callback' => 'tunihilsp2d_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tunihilsp2d_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+    $items['tunihilsp2d/verify'] = array (
+      'title' => 'Verifikasi SP2D',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('tunihilsp2d_verify_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'tunihilsp2d_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );
+	
+    $items['tunihilsp2d/delete'] = array (
+      'title' => 'Hapus SP2D',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('tunihilsp2d_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'tunihilsp2d_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+    return $items;
+}
+
