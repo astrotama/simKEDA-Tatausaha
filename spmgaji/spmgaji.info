@@ -1,0 +1,6 @@
+; $Id$
+name = "SPM Gaji"
+description = "Penatausahaan - SPM Gaji"
+;dependencies[] = 
+core = 7.x
+package="simKEDA"

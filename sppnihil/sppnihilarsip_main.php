@@ -1,0 +1,436 @@
+<?php
+function sppnihilarsip_main($arg=NULL, $nama=NULL) {
+	$qlike='';
+	$limit = 10;
+    
+	if ($arg) {
+		switch($arg) {
+			case 'show':
+				$qlike = " and lower(k.kegiatan) like lower('%%%s%%')";    
+				break;
+			case 'filter':
+			
+				//drupal_set_message('filter');
+				//drupal_set_message(arg(5));
+				
+				$kodeuk = arg(2);
+				$bulan = arg(3);
+				$sppok = arg(4);
+				$sppnihil = arg(5);
+
+				break;
+				
+			case 'excel':
+				break;
+
+			default:
+				//drupal_access_denied();
+				break;
+		}
+		
+	} else {
+
+	
+		if (isUserSKPD()) 
+			$kodeuk = apbd_getuseruk();
+		else {
+			if(!isset($_SESSION["sppnihilarsip_kodeuk"]))
+				$_SESSION["sppnihilarsip_kodeuk"]='ZZ';
+			$kodeuk = $_SESSION["sppnihilarsip_kodeuk"];
+			//if ($kodeuk=='') $kodeuk = 'ZZ';
+		}
+		//$bulan = date('m');
+		if(!isset($_SESSION["sppnihilarsip_bulan"]))
+				$_SESSION["sppnihilarsip_bulan"]= date('m');
+		$bulan = $_SESSION["sppnihilarsip_bulan"];
+		if ($bulan=='') $bulan = date('m');
+		
+		
+		if(!isset($_SESSION["sppnihilarsip_sppok"]))
+				$_SESSION["sppnihilarsip_sppok"]='ZZ';
+		$sppok = $_SESSION["sppnihilarsip_sppok"];
+		//if ($sppok=='') $sppok = 'ZZ';
+
+		$sppnihil = $_SESSION["sppnihilarsip_sppnihil"];
+		if ($sppnihil=='') $sppnihil = '0';
+		
+	}
+	
+	/*
+	if (isUserSKPD()) {
+		drupal_set_message('SKPD');
+		drupal_set_message(apbd_getuseruk());
+	} else
+		drupal_set_message('Not SKPD');
+	*/
+	//drupal_set_message($jenisdokumen);
+	
+	//drupal_set_message(apbd_getkodejurnal('90'));
+	
+	$output_form = drupal_get_form('sppnihilarsip_main_form');
+	if (isSuperuser()) 
+		$header = array (
+			array('data' => 'No','width' => '10px', 'valign'=>'top'),
+			array('data' => '', 'width' => '10px', 'valign'=>'top'),
+			array('data' => 'SPP', 'field'=> 'sppno', 'valign'=>'top'),
+			array('data' => 'Tanggal','width' => '90px',  'field'=> 'spptgl', 'valign'=>'top'),
+			array('data' => 'SPM', 'field'=> 'spmno', 'valign'=>'top'),
+			array('data' => 'SP2D', 'field'=> 'sp2dno', 'valign'=>'top'),
+			array('data' => 'SKPD', 'field'=> 'kodeuk', 'valign'=>'top'),
+			array('data' => 'Bulan', 'field'=> 'bulan', 'valign'=>'top'),
+			array('data' => 'Keperluan', 'field'=> 'keperluan', 'valign'=>'top'),
+			array('data' => 'Jumlah', 'width' => '90px', 'field'=> 'netto',  'valign'=>'top'),
+			array('data' => '', 'width' => '60px', 'valign'=>'top'),			
+		);
+	else
+		$header = array (
+			array('data' => 'No','width' => '10px', 'valign'=>'top'),
+			array('data' => '', 'width' => '10px', 'valign'=>'top'),
+			array('data' => 'SPP', 'field'=> 'sppno', 'valign'=>'top'),
+			array('data' => 'Tanggal','width' => '90px',  'field'=> 'spptgl', 'valign'=>'top'),
+			array('data' => 'SPM', 'field'=> 'spmno', 'valign'=>'top'),
+			array('data' => 'SP2D', 'field'=> 'sp2dno', 'valign'=>'top'),
+			array('data' => 'Bulan', 'field'=> 'bulan', 'valign'=>'top'),
+			array('data' => 'Keperluan', 'field'=> 'keperluan', 'valign'=>'top'),
+			array('data' => 'Jumlah', 'width' => '90px', 'field'=> 'netto',  'valign'=>'top'),
+			array('data' => '', 'width' => '60px', 'valign'=>'top'),			
+		);		
+
+	$query = db_select('dokumen', 'd')->extend('PagerDefault')->extend('TableSort');
+	$query->innerJoin('unitkerja', 'u', 'd.kodeuk=u.kodeuk');
+
+	# get the desired fields from the database
+	$query->fields('d', array('dokid', 'sppno', 'spptgl','jenisdokumen', 'spmno', 'sp2dno', 'bulan', 'kodeuk', 'jumlah', 'potongan', 'netto', 'sppok', 'keperluan', 'sp2dok', 'sp2dsudah'));
+	$query->fields('u', array('namasingkat'));
+	
+	//GAJI
+	if (($sppnihil=='5') || ($sppnihil=='7')) {
+		$query->condition('d.jenisdokumen', $sppnihil, '=');
+	} else {
+		
+		$or_nihil = db_or();
+		$or_nihil->condition('d.jenisdokumen', '5', '=');
+		$or_nihil->condition('d.jenisdokumen', '7', '=');
+		$query->condition($or_nihil);
+	}
+	
+	if ($kodeuk !='ZZ') $query->condition('d.kodeuk', $kodeuk, '=');
+	if ($bulan !='0') $query->condition('d.bulan', $bulan, '=');
+	
+	if (($sppok =='0') or ($sppok =='1'))
+		$query->condition('d.sppok', $sppok, '=');
+	else if ($sppok =='2') {
+		$query->condition('d.sppok', '1', '=');
+		$query->condition('d.spmok', '1', '=');
+	} else if ($sppok =='3') {
+		$query->condition('d.sppok', '1', '=');
+		$query->condition('d.spmok', '1', '=');
+		$query->condition('d.sp2dok', '1', '=');
+		$query->condition('d.sp2dsudah', '1', '=');
+	}
+	//if ($sppok !='ZZ') $query->condition('d.sppok', $sppok, '=');
+	
+	$query->orderByHeader($header);
+	$query->orderBy('u.namasingkat', 'ASC');
+	$query->limit($limit);
+		
+	//dpq($query);
+	
+	# execute the query
+	$results = $query->execute();
+		
+	# build the table fields
+	$no=0;
+
+	if (isset($_GET['page'])) {
+		$page = $_GET['page'];
+		$no = $page * $limit;
+	} else {
+		$no = 0;
+	} 
+
+	$rows = array();
+	foreach ($results as $data) {
+		$no++;  
+		
+		//icon
+		if($data->sppok=='1')
+			if ($data->sp2dok=='1')
+				$proses = apbd_icon_valid();
+			else
+				$proses = apbd_icon_sudah();
+		else
+			$proses = apbd_icon_belum();
+		
+		//EDIT LINK
+		if ($data->jenisdokumen =='5') {
+			$editlink = apbd_button_jurnal('gubaruspp/edit/' . $data->dokid);
+		} else {
+			$editlink = apbd_button_jurnal('tunihilbaruspp/edit/' . $data->dokid);
+		}
+		//$editlink = apbd_button_jurnal('tunihilbaruspp/edit/' . $data->dokid);
+		if($data->sppok=='0') $editlink .=  apbd_button_hapus('sppnihil/delete/' . $data->dokid);		//'<a class="btn //btn-danger btn-xs 
+		//	$editlink .=  apbd_button_hapus_disabled();
+		//else
+		//	$editlink .=  apbd_button_hapus('sppnihil/delete/' . $data->dokid);		//'<a class="btn btn-danger btn-xs 
+
+		if ($data->sppno=='') 
+			$spptgl = '';
+		else
+			$spptgl = apbd_fd($data->spptgl);
+		
+		if (isSuperuser())
+			$rows[] = array(
+							array('data' => $no, 'align' => 'right', 'valign'=>'top'),
+							array('data' => $proses,'align' => 'right', 'valign'=>'top'),
+							array('data' => $data->sppno,'align' => 'left', 'valign'=>'top'),
+							array('data' => $spptgl,'align' => 'center', 'valign'=>'top'),
+							array('data' => $data->spmno,'align' => 'left', 'valign'=>'top'),
+							array('data' => $data->sp2dno,'align' => 'left', 'valign'=>'top'),
+							array('data' => $data->namasingkat,  'align' => 'left', 'valign'=>'top'),
+							array('data' => apbd_getbulan($data->bulan), 'align' => 'left', 'valign'=>'top'),
+							array('data' => $data->keperluan, 'align' => 'left', 'valign'=>'top'),
+							array('data' => apbd_fn($data->jumlah),'align' => 'right', 'valign'=>'top'),
+							$editlink,
+							//"<a href=\'?q=jurnal/edit/'>" . 'Register' . '</a>',
+							
+						);
+		else
+			$rows[] = array(
+							array('data' => $no, 'align' => 'right', 'valign'=>'top'),
+							array('data' => $proses,'align' => 'right', 'valign'=>'top'),
+							array('data' => $data->sppno,'align' => 'left', 'valign'=>'top'),
+							array('data' => $spptgl,'align' => 'center', 'valign'=>'top'),
+							array('data' => $data->spmno,'align' => 'left', 'valign'=>'top'),
+							array('data' => $data->sp2dno,'align' => 'left', 'valign'=>'top'),
+							array('data' => apbd_getbulan($data->bulan), 'align' => 'left', 'valign'=>'top'),
+							array('data' => $data->keperluan, 'align' => 'left', 'valign'=>'top'),
+							array('data' => apbd_fn($data->jumlah),'align' => 'right', 'valign'=>'top'),
+							$editlink,
+							//"<a href=\'?q=jurnal/edit/'>" . 'Register' . '</a>',
+							
+						);			
+	}
+	
+	
+	//BUTTON
+	/*
+	if (isUserSKPD()) {
+		$btn = apbd_button_baru('tunihilspp/newkeg');
+		$btn .= "&nbsp;" . apbd_button_print('');
+	} else 
+		$btn = apbd_button_print('');
+	$btn .= "&nbsp;" . apbd_button_excel('');	
+	
+	
+	$output = theme('table', array('header' => $header, 'rows' => $rows ));
+	$output .= theme('pager');
+	if(arg(7)=='pdf'){
+		$output=getData($kodeuk,$bulan,$jenisdokumen,$keyword);
+		print_pdf_l($output);
+		
+	}
+	else{
+		return drupal_render($output_form) . $btn . $output . $btn;
+	}
+	*/
+
+	$output = theme('table', array('header' => $header, 'rows' => $rows ));
+	$output .= theme('pager');
+	return drupal_render($output_form) . $output;
+	
+}
+
+
+function getData($kodeuk,$bulan,$jenisdokumen,$keyword){
+	
+}
+
+function sppnihilarsip_main_form_submit($form, &$form_state) {
+	$kodeuk = $form_state['values']['kodeuk'];
+	$bulan = $form_state['values']['bulan'];
+	$sppok = $form_state['values']['sppok'];
+	$sppnihil = $form_state['values']['sppnihil'];
+	
+	/*
+	if($form_state['clicked_button']['#value'] == $form_state['values']['submit2']) {
+		drupal_set_message($form_state['values']['submit2']);
+	}
+	else{
+		drupal_set_message($form_state['clicked_button']['#value']);
+	}
+	*/
+	
+	$_SESSION["sppnihilarsip_kodeuk"] = $kodeuk;
+	$_SESSION["sppnihilarsip_bulan"] = $bulan;
+	$_SESSION["sppnihilarsip_sppok"] = $sppok;
+	$_SESSION["sppnihilarsip_sppnihil"] = $sppnihil;
+	
+	$uri = 'sppnihilarsip/filter/' . $kodeuk . '/' . $bulan  . '/' . $sppok . '/' . $sppnihil ;
+	drupal_goto($uri);
+	
+}
+
+
+function sppnihilarsip_main_form($form, &$form_state) {
+	
+	//$kodeuk = 'ZZ';
+	//$bulan = date('m');
+	//$bulan = '1';
+	//$sppok = 'ZZ';
+	
+	if(arg(2)!=null){
+		
+		$kodeuk = arg(2);
+		$bulan=arg(3);
+		$sppok = arg(4);
+		$sppnihil = arg(5);
+
+	} else {
+		if (isUserSKPD()) 
+			$kodeuk = apbd_getuseruk();
+		else {
+			$kodeuk = $_SESSION["sppnihilarsip_kodeuk"];
+			if ($kodeuk=='') $kodeuk = 'ZZ';
+		}
+		//$bulan = date('m');
+		$bulan = $_SESSION["sppnihilarsip_bulan"];
+		if ($bulan=='') $bulan = '1';
+		
+		$sppok = $_SESSION["sppnihilarsip_sppok"];
+		if ($sppok=='') $sppok = 'ZZ';
+
+		$sppnihil = $_SESSION["sppnihilarsip_sppnihil"];
+		if ($sppnihil=='') $sppnihil = '0';
+		
+	}
+ 
+	$form['formdata'] = array (
+		'#type' => 'fieldset',
+		'#title'=>  'PILIHAN DATA' . '<em><small class="text-info pull-right">' . get_label_data($bulan, $sppok) . '</small></em>',		//'#attributes' => array('class' => array('container-inline')),
+		'#collapsible' => TRUE,
+		'#collapsed' => FALSE,        
+	);		
+	
+	//SKPD
+	if (isUserSKPD()) {
+		$form['formdata']['kodeuk'] = array(
+			'#type' => 'value',
+			'#value' => $kodeuk,
+		);			
+		$form['formdata']['namauk'] = array(
+			'#type' => 'textfield',
+			'#title' =>  t('SKPD'),
+			'#prefix' => '<div class="col-md-6">',
+			'#suffix' => '</div>',				
+			'#default_value' => apbd_getuseruk_nama($kodeuk),
+		);
+				
+	} else {	
+		$query = db_select('unitkerja', 'p');
+		# get the desired fields from the database
+		$query->fields('p', array('namasingkat','kodeuk','kodedinas'))
+				->orderBy('kodedinas', 'ASC');
+		# execute the query
+		$results = $query->execute();
+		# build the table fields
+		$option_skpd['ZZ'] = 'SELURUH SKPD'; 
+		if($results){
+			foreach($results as $data) {
+			  $option_skpd[$data->kodeuk] = $data->namasingkat; 
+			}
+		}		
+		$form['formdata']['kodeuk'] = array(
+			'#type' => 'select',
+			'#title' =>  t('SKPD'),
+			'#prefix' => '<div class="col-md-6">',
+			'#suffix' => '</div>',
+			// The entire enclosing div created here gets replaced when dropdown_first
+			// is changed.
+			//'#prefix' => '<div id="skpd-replace">',
+			//'#suffix' => '</div>',
+			// When the form is rebuilt during ajax processing, the $selected variable
+			// will now have the new value and so the options will change.
+			'#options' => $option_skpd,
+			//'#default_value' => isset($form_state['values']['skpd']) ? $form_state['values']['skpd'] : $kodeuk,
+			'#default_value' => $kodeuk,
+		);
+	}
+	
+	//BULAN
+	$option_bulan =array('Setahun', 'Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember');
+	$form['formdata']['bulan'] = array(
+		'#type' => 'select',
+		'#title' =>  t('Bulan'),
+		'#prefix' => '<div class="col-md-6">',
+		'#suffix' => '</div>',
+		// The entire enclosing div created here gets replaced when dropdown_first
+		// is changed.
+		'#options' => $option_bulan,
+		//'#default_value' => isset($form_state['values']['skpd']) ? $form_state['values']['skpd'] : $kodeuk,
+		'#default_value' =>$bulan,
+	);
+	
+	//SPP
+	$opt_nihil['0'] ='SEMUA SPP NIHIL';
+	$opt_nihil['7'] = 'SPP TU NIHIL';	
+	$opt_nihil['5'] = 'SPP GU NIHIL';
+	$form['formdata']['sppnihil'] = array(
+		'#type' => 'select',
+		'#title' =>  t('Jenis SPP Nihil'),
+		'#prefix' => '<div class="col-md-6">',
+		'#suffix' => '</div>',
+		'#options' => $opt_nihil,
+		//'#default_value' => isset($form_state['values']['skpd']) ? $form_state['values']['skpd'] : $kodeuk,
+		'#default_value' => $sppnihil,
+	);	 
+
+	//SPP
+	$opt_jurnal['ZZ'] ='SEMUA SPP';
+	$opt_jurnal['0'] = 'SPP BELUM DIVERIFIKASI';
+	$opt_jurnal['1'] = 'SPP SUDAH DIVERIFIKASI';	
+	$opt_jurnal['2'] = 'SPP SUDAH TERBIT SPM';
+	$opt_jurnal['3'] = 'SPP SUDAH TERBIT SP2D';
+	$form['formdata']['sppok'] = array(
+		'#type' => 'select',
+		'#title' =>  t('Status'),
+		'#prefix' => '<div class="col-md-6">',
+		'#suffix' => '</div>',
+		'#options' => $opt_jurnal,
+		//'#default_value' => isset($form_state['values']['skpd']) ? $form_state['values']['skpd'] : $kodeuk,
+		'#default_value' => $sppok,
+	);	 
+
+	$form['formdata']['submit']= array(
+		'#type' => 'submit',
+		'#prefix' => '<div class="col-md-12">',
+		'#suffix' => '</div>',
+		'#value' => '<span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span> Tampilkan',
+		'#attributes' => array('class' => array('btn btn-success btn-sm')),
+	);
+	return $form;
+}
+
+
+function get_label_data($bulan, $status) {
+if ($bulan=='0')
+	$label = 'Setahun';
+else 
+	$label = 'Bulan ' . apbd_get_namabulan($bulan);
+
+if ($status=='ZZ')
+	$label .= '/Semua SPP';
+else if ($status=='0')	
+	$label .= '/Belum verifikasi';
+else if ($status=='1')	
+	$label .= '/Sudah verifikasi';
+else if ($status=='2')
+	$label .= '/Sudah SPM';
+else if ($status=='3')	
+	$label .= '/Sudah SP2D';
+
+$label .= ' (Klik disini untuk mengganti pilihan data)';
+return $label;
+}
+
+?>

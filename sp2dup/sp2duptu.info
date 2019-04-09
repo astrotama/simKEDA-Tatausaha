@@ -1,0 +1,6 @@
+; $Id$
+name = "SP2D UP dan TU"
+description = "Penatausahaan - SP2D UP dan TU"
+;dependencies[] = 
+core = 7.x
+package="simKEDA"

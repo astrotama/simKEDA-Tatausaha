@@ -1,0 +1,82 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function spmtu_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function spmtu_menu() {
+
+
+	$items['spmtu/edit'] = array (
+      'title' => 'SPM TU',
+	  'description' => 'SPM TU',
+	  'title callback' => 'spmtu_title_callback',	  
+      'page callback' => 'spmtu_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmtu_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['spmtuarsip'] = array (
+      'title' => 'Daftar SPM TU',
+	  'description' => 'Daftar SPM TU',
+	  'title callback' => 'spmtuarsip_title_callback',	  
+      'page callback' => 'spmtuarsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmtuarsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['spmtu/delete'] = array (
+      'title' => 'Hapus SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('spmtu_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'spmtu_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+
+    $items['spmtu/verify'] = array (
+      'title' => 'Verifikasi SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('spmtu_verify_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'spmtu_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+
+	
+    return $items;
+}
+
+
+function spmtuantrian_title_callback() {
+    return t('Antrian SPM TU');
+}
+
+function spmtu_title_callback() {
+	return t('SPM TU');
+}
+
+function spmtuarsip_title_callback() {
+    return t('Daftar SPM TU');
+}
+

@@ -1,0 +1,58 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function sp2duptu_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function sp2duptu_menu() {
+
+
+	$items['sp2duptu/edit'] = array (
+      'title' => 'SP2D UP/TU',
+	  'description' => 'SP2D UP/TU',
+	  'title callback' => 'sp2duptu_title_callback',	  
+      'page callback' => 'sp2duptu_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'sp2duptu_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['sp2duptuarsip'] = array (
+      'title' => 'Daftar SP2D UP/TU',
+	  'description' => 'Daftar SP2D UP/TU',
+	  'title callback' => 'sp2duptuarsip_title_callback',	  
+      'page callback' => 'sp2duptuarsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'sp2duptuarsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+
+    return $items;
+}
+
+
+function sp2duptu_title_callback() {
+	return t('SP2D UP/TU');
+}
+
+function sp2duptuarsip_title_callback() {
+    return t('Daftar SP2D UP/TU');
+}
+

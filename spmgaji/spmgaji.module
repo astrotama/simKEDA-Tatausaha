@@ -1,0 +1,103 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function spmgaji_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function spmgaji_menu() {
+
+	$items['spmgajiantrian'] = array (
+      'title' => 'Antrian SPM Gaji',
+	  'description' => 'Antrian SPM Gaji',
+	  'title callback' => 'spmgajiantrian_title_callback',	  
+      'page callback' => 'spmgajiantrian_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmgajiantrian_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['spmgaji/new'] = array (
+      'title' => 'SPM Gaji',
+	  'description' => 'SPM Gaji',
+	  'title callback' => 'spmgaji_title_callback',	  
+      'page callback' => 'spmgaji_new_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmgaji_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['spmgaji/edit'] = array (
+      'title' => 'SPM Gaji',
+	  'description' => 'SPM Gaji',
+	  'title callback' => 'spmgaji_title_callback',	  
+      'page callback' => 'spmgaji_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmgaji_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['spmgajiarsip'] = array (
+      'title' => 'Daftar SPM Gaji',
+	  'description' => 'Daftar SPM Gaji',
+	  'title callback' => 'spmgajiarsip_title_callback',	  
+      'page callback' => 'spmgajiarsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmgajiarsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['spmgaji/delete'] = array (
+      'title' => 'Hapus SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('spmgaji_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'spmgaji_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+
+    $items['spmgaji/verify'] = array (
+      'title' => 'Verifikasi SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('spmgaji_verify_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'spmgaji_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+
+	
+    return $items;
+}
+
+
+function spmgajiantrian_title_callback() {
+    return t('Antrian SPM Gaji');
+}
+
+function spmgaji_title_callback() {
+	return t('SPM Gaji');
+}
+
+function spmgajiarsip_title_callback() {
+    return t('Daftar SPM Gaji');
+}
+

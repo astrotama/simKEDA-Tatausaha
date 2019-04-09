@@ -1,0 +1,35 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function spd_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function spd_menu() {
+
+    $items['spd'] = array (
+      'title' => 'SPD Belanja',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('spd_edit_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'spd_edit_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+
+    return $items;
+}
+
+
+

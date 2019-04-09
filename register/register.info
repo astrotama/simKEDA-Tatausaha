@@ -1,0 +1,6 @@
+; $Id$
+name = "Register Module"
+description = "Penatausahaan - REgister Module"
+;dependencies[] = 
+core = 7.x
+package="simKEDA"

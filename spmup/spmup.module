@@ -1,0 +1,82 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function spmup_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function spmup_menu() {
+
+
+	$items['spmup/edit'] = array (
+      'title' => 'SPM UP',
+	  'description' => 'SPM UP',
+	  'title callback' => 'spmup_title_callback',	  
+      'page callback' => 'spmup_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmup_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['spmuparsip'] = array (
+      'title' => 'Daftar SPM UP dan TU',
+	  'description' => 'Daftar SPM UP dan TU',
+	  'title callback' => 'spmuparsip_title_callback',	  
+      'page callback' => 'spmuparsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmuparsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['spmup/delete'] = array (
+      'title' => 'Hapus SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('spmup_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'spmup_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+
+    $items['spmup/verify'] = array (
+      'title' => 'Verifikasi SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('spmup_verify_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'spmup_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+
+	
+    return $items;
+}
+
+
+function spmupantrian_title_callback() {
+    return t('Antrian SPM UP');
+}
+
+function spmup_title_callback() {
+	return t('SPM UP');
+}
+
+function spmuparsip_title_callback() {
+    return t('Daftar SPM UP dan TU');
+}
+

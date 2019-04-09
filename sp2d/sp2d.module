@@ -1,0 +1,78 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function sp2d_permission() {
+	return array(
+		'sp2d verifikator' => array(
+			'title' => t('SP2D verifikator'),
+			'description' => t('SP2D verifikator.'),
+		),
+
+    'sp2d skpd' => array(
+      'title' => t('SP2D SKPD'),
+      'description' => t('SP2D SKPD.'),
+    ),
+		
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function sp2d_menu() {
+
+
+	$items['sp2darsipgaji'] = array (
+      'title' => 'Daftar SP2D Gaji',
+	  'description' => 'Daftar SP2D Gaji',
+	  'title callback' => 'sp2d_gaji_title_callback',	  
+      'page callback' => 'sp2d_gaji_main',
+      'access arguments' => array ('sp2d verifikator'),
+	  //'access callback' => 'user_is_logged_in',
+	  
+      'weight' => 11,
+      'file' => 'sp2d_gaji_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+	$items['sp2darsiprutin'] = array (
+      'title' => 'Daftar SP2D Rutin',
+	  'description' => 'Daftar SP2D Rutin',
+	  'title callback' => 'sp2d_rutin_title_callback',	  
+      'page callback' => 'sp2d_rutin_main',
+	  //'access callback' => 'user_is_logged_in',
+      'access arguments' => array ('sp2d verifikator'),
+	   
+      'weight' => 11,
+      'file' => 'sp2d_rutin_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['sp2darsipskpd'] = array (
+      'title' => 'Daftar SP2D',
+	  'description' => 'Daftar SP2D',
+	  //'title callback' => 'sp2d_gaji_title_callback',	  
+      'page callback' => 'sp2d_skpd_main',
+      'access arguments' => array ('sp2d skpd'),
+	  //'access callback' => 'user_is_logged_in',
+	  
+      'weight' => 11,
+      'file' => 'sp2d_skpd_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+    return $items;
+}
+
+function sp2d_gaji_title_callback() {
+    return t('Daftar SP2D Gaji');
+}
+
+function sp2d_rutin_title_callback() {
+    return t('Daftar SP2D Rutin');
+}

@@ -1,0 +1,137 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function sppgaji_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function sppgaji_menu() {
+
+	$items['sppgajiantrian'] = array (
+      'title' => 'Antrian SPP Gaji',
+	  'description' => 'Antrian SPP Gaji',
+	  'title callback' => 'sppgajiantrian_title_callback',	  
+      'page callback' => 'sppgajiantrian_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'sppgajiantrian_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['cobapdf'] = array (
+      'title' => 'coba', 
+      'page callback' => 'coba_pdf_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'coba_pdf_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['tampil'] = array (
+      'title' => 'Tampil',
+	  'description' => 'Tampil',
+	  'title callback' => 'tampil_title_callback',	  
+      'page callback' => 'tampil_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'tampil_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+	$items['sppgaji/new'] = array (
+      'title' => 'SPP Gaji',
+	  'description' => 'SPP Gaji',
+	  'title callback' => 'sppgaji_title_callback',	  
+      'page callback' => 'sppgaji_new_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'sppgaji_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['sppgaji/newmanual'] = array (
+      'title' => 'SPP Gaji',
+	  'description' => 'SPP Gaji',
+	  'title callback' => 'sppgaji_title_callback',	  
+      'page callback' => 'sppgaji_newmanual_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'sppgaji_newmanual_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['sppgaji/edit'] = array (
+      'title' => 'SPP Gaji',
+	  'description' => 'SPP Gaji',
+	  'title callback' => 'sppgaji_title_callback',	  
+      'page callback' => 'sppgaji_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'sppgaji_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	/*
+	$items['kontrak'] = array (
+      'title' => 'SPP Gaji',
+	  'description' => 'SPP Gaji',
+	  'title callback' => 'sppgaji_title_callback',	  
+      'page callback' => 'laporan_kontrak_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_kontrak_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	*/
+	
+	$items['sppgajiarsip'] = array (
+      'title' => 'Daftar SPP Gaji',
+	  'description' => 'Daftar SPP Gaji',
+	  'title callback' => 'sppgajiarsip_title_callback',	  
+      'page callback' => 'sppgajiarsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'sppgajiarsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['sppgaji/delete'] = array (
+      'title' => 'Hapus SPP',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('sppgaji_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'sppgaji_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+
+    return $items;
+}
+
+
+function sppgajiantrian_title_callback() {
+    return t('Antrian SPP Gaji');
+}
+
+function sppgaji_title_callback() {
+	return t('SPP Gaji');
+}
+
+function sppgajiarsip_title_callback() {
+    return t('Daftar SPP Gaji');
+}
+

@@ -1,0 +1,103 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function spmnihil_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function spmnihil_menu() {
+
+	$items['spmnihilantrian'] = array (
+      'title' => 'Antrian SPM Nihil',
+	  'description' => 'Antrian SPM Nihil',
+	  'title callback' => 'spmnihilantrian_title_callback',	  
+      'page callback' => 'spmnihilantrian_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmnihilantrian_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['spmnihil/new'] = array (
+      'title' => 'SPM Nihil',
+	  'description' => 'SPM Nihil',
+	  'title callback' => 'spmnihil_title_callback',	  
+      'page callback' => 'spmnihil_new_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmnihil_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['spmnihil/edit'] = array (
+      'title' => 'SPM Nihil',
+	  'description' => 'SPM Nihil',
+	  'title callback' => 'spmnihil_title_callback',	  
+      'page callback' => 'spmnihil_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmnihil_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['spmnihilarsip'] = array (
+      'title' => 'Daftar SPM Nihil',
+	  'description' => 'Daftar SPM Nihil',
+	  'title callback' => 'spmnihilarsip_title_callback',	  
+      'page callback' => 'spmnihilarsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spmnihilarsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['spmnihil/delete'] = array (
+      'title' => 'Hapus SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('spmnihil_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'spmnihil_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+
+    $items['spmnihil/verify'] = array (
+      'title' => 'Verifikasi SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('spmnihil_verify_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'spmnihil_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+
+	
+    return $items;
+}
+
+
+function spmnihilantrian_title_callback() {
+    return t('Antrian SPM Nihil');
+}
+
+function spmnihil_title_callback() {
+	return t('SPM Nihil');
+}
+
+function spmnihilarsip_title_callback() {
+    return t('Daftar SPM Nihil');
+}
+
