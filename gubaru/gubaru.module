@@ -1,0 +1,272 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function gubaru_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function gubaru_menu() {
+	
+	$items['gubarusp2dcoba/edit'] = array (
+      'title' => 'SP2D Ganti Uang',
+	  'description' => 'SP2D Ganti Uang | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gubarusp2dcoba_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gubarusp2dcoba_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+	$items['gubaruspmcoba/edit'] = array (
+      'title' => 'SPM Ganti Uang',
+	  'description' => 'SPM Ganti Uang | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gubaruspmcoba_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gubaruspmcoba_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+	
+	$items['gubarusppcoba/edit'] = array (
+      'title' => 'SPP Ganti Uang',
+	  'description' => 'SPP Ganti Uang | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gubarusppcoba_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gubarusppcoba_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['gubaruspp/new'] = array (
+      'title' => 'SPP Ganti Uang | Baru',
+	  'description' => 'SPP Ganti Uang | Baru',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gubaruspp_new_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gubaruspp_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['gubaruspp/edit'] = array (
+      'title' => 'SPP Ganti Uang',
+	  'description' => 'SPP Ganti Uang | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gubaruspp_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gubaruspp_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['gubaruspp/cetak'] = array (
+      'title' => 'SPP Ganti Uang Cetak',
+	  'description' => 'SPP Ganti Uang | Cetak',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'form_cetak_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'form_cetak_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['gubaruspp/pilihkeg'] = array (
+      'title' => 'Pilih Kegiatan',
+	  'description' => 'Pilih Kegiatan',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gubaruspp_pilihkeg_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gubaruspp_pilihkeg_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['gubaruspp/pilihkegspj'] = array (
+      'title' => 'Pilih SPJ',
+	  'description' => 'Pilih SPJ',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gubaruspp_pilihkegspj_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gubaruspp_pilihkegspj_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+	$items['gubaruspp/verify'] = array (
+      'title' => 'Verifikasi SPP GU',
+	  'description' => 'Verifikasi SPP GU',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gubaruspp_verify_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gubaruspp_verify_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['gubaru/new'] = array (
+      'title' => 'Usulan GU | Baru',
+	  'description' => 'Usulan GU | Baru',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_new_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['gubaru/arsip'] = array (
+      'title' => 'Usulan GU | Arsip',
+	  'description' => 'Usulan GU | Arsip',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['gubaru/edit'] = array (
+      'title' => 'Usulan GU | Edit',
+	  'description' => 'Usulan GU | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['gubaru/selectkeg'] = array (
+      'title' => 'Usulan GU | Pilih Kegiatan',
+	  'description' => 'Usulan GU | Pilih Kegiatan',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_keg_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_keg_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+	$items['gubaru/selectspj'] = array (
+      'title' => 'Usulan GU | Pilih',
+	  'description' => 'Usulan GU | Pilih',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_selectspj_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_selectspj_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['gubaru/delete'] = array (
+      'title' => 'Usulan GU | Hapus',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('usulan_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'usulan_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+
+	$items['gubaru/ajax'] = array (
+      'title' => 'Ajax',
+	  'description' => 'Ajax',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'ajax_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'ajax_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['gubaru/select'] = array (
+      'title' => 'Pilih Usulan GU',
+	  'description' => 'Pilih Usulan GU',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'usulan_arsipselect_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'usulan_arsipselect_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+	//SPM
+	$items['gubaruspm/edit'] = array (
+      'title' => 'SPM Ganti Uang',
+	  'description' => 'SPM Ganti Uang | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gubaruspm_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gubaruspm_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+	//SP2D
+	$items['gubarusp2d/edit'] = array (
+      'title' => 'SP2D Ganti Uang',
+	  'description' => 'SP2D Ganti Uang | Edit',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gubarusp2d_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gubarusp2d_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+
+	//KUITANSI 
+	$items['gukuitansi/edit'] = array (
+      'title' => 'Kuitansi A2-1',
+	  //'title callback' => 'laporan_title_callback',	  
+      'page callback' => 'gukuitansi_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gukuitansi_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['gukuitansi/edita2'] = array (
+      'title' => 'Kuitansi A2-2',
+	  //'title callback' => 'laporan_title_callback',	  
+      'page callback' => 'gukuitansi_a22_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gukuitansi_a22_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );		
+    return $items;
+}
+
+function issudahmasuk($dokid, $kodekeg) {
+$ada = false;	
+
+$results = db_query('select kodekeg from {dokumenrekening} where dokid=:dokid and kodekeg=:kodekeg', array(':dokid'=>$dokid, ':kodekeg'=>$kodekeg));
+foreach ($results as $data) {
+	$ada = true;
+}
+
+return $ada;	
+}	
+

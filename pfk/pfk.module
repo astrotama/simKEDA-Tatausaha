@@ -1,0 +1,176 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function pfk_permission() {
+  return array(
+    'dokumen pfk' => array(
+      'title' => t('Dokumen PFK'),
+      'description' => t('Dokumen PFK.'),
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function pfk_menu() {
+
+	$items['pfkspp/new'] = array (
+      'title' => 'SPP PFK',
+	  'description' => 'SPP PFK',
+	  'title callback' => 'pfkspp_title_callback',	  
+      'page callback' => 'pfkspp_new_main',
+      'access arguments' => array ('dokumen pfk'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'pfkspp_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['pfkspp/edit'] = array (
+      'title' => 'SPP PFK',
+	  'description' => 'SPP PFK',
+	  'title callback' => 'pfkspp_title_callback',	  
+      'page callback' => 'pfkspp_edit_main',
+      'access arguments' => array ('dokumen pfk'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'pfkspp_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['pfkspparsip'] = array (
+      'title' => 'Daftar SPP PFK',
+	  'description' => 'Daftar SPP PFK',
+	  'title callback' => 'pfkspp_arsip_title_callback',	  
+      'page callback' => 'pfkspp_arsip_main',
+      'access arguments' => array ('dokumen pfk'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'pfkspp_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['pfkspp/delete'] = array (
+      'title' => 'Hapus SPP',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pfkspp_delete_form'),
+	  'access arguments' => array ('dokumen pfk'),
+      'file' => 'pfkspp_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+
+	$items['pfkspm/edit'] = array (
+      'title' => 'SPM PFK',
+	  'description' => 'SPM PFK',
+	  'title callback' => 'pfkspm_title_callback',	  
+      'page callback' => 'pfkspm_edit_main',
+      'access arguments' => array ('dokumen pfk'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'pfkspm_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['pfkspmarsip'] = array (
+      'title' => 'Daftar SPM PFK',
+	  'description' => 'Daftar SPM PFK',
+	  'title callback' => 'pfkspm_arsip_title_callback',	  
+      'page callback' => 'pfkspm_arsip_main',
+      'access arguments' => array ('dokumen pfk'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'pfkspm_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['pfkspm/verify'] = array (
+      'title' => 'Verifikasi SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pfkspm_verify_form'),
+	  'access arguments' => array ('dokumen pfk'),
+      'file' => 'pfkspm_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );
+	
+    $items['pfkspm/delete'] = array (
+      'title' => 'Hapus SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pfkspm_delete_form'),
+	  'access arguments' => array ('dokumen pfk'),
+      'file' => 'pfkspm_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+
+	$items['pfksp2darsip'] = array (
+      'title' => 'Daftar SP2D PFK',
+	  'description' => 'Daftar SP2D PFK',
+	  'title callback' => 'pfksp2d_arsip_title_callback',	  
+      'page callback' => 'pfksp2d_arsip_main',
+      'access arguments' => array ('dokumen pfk'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'pfksp2d_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['pfksp2d/edit'] = array (
+      'title' => 'SP2D PFK',
+	  'description' => 'SP2D PFK',
+	  'title callback' => 'pfksp2d_title_callback',	  
+      'page callback' => 'pfksp2d_edit_main',
+      'access arguments' => array ('dokumen pfk'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11, 
+      'file' => 'pfksp2d_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+    $items['pfksp2d/verify'] = array (
+      'title' => 'Verifikasi SP2D',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pfksp2d_verify_form'),
+	  'access arguments' => array ('dokumen pfk'),
+      'file' => 'pfksp2d_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );
+	
+    $items['pfksp2d/delete'] = array (
+      'title' => 'Hapus SP2D',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pfksp2d_delete_form'),
+	  'access arguments' => array ('dokumen pfk'),
+      'file' => 'pfksp2d_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+    return $items;
+}
+
+
+function pfkspp_title_callback() {
+	return t('SPP PFK');
+}
+
+function pfkspp_arsip_title_callback() {
+    return t('Daftar SPP PFK');
+}
+
+function pfkspm_title_callback() {
+	return t('SPM PFK');
+}
+
+function pfkspm_arsip_title_callback() {
+    return t('Daftar SPM PFK');
+}
+
+function pfksp2d_title_callback() {
+	return t('SP2D PFK');
+}
+
+function pfksp2d_arsip_title_callback() {
+    return t('Daftar SP2D PFK');
+}

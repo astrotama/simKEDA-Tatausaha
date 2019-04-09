@@ -1,0 +1,5 @@
+name = "Dokumen Digital SPJ"
+description = "Penatausahaan - Dokumen Digital SPJ"
+;dependencies[] = 
+core = 7.x
+package="simKEDA"

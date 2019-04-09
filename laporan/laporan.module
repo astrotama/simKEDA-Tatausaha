@@ -1,0 +1,197 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function laporan_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function laporan_menu() {
+
+	$items['laporan'] = array (
+      'title' => 'Laporan Penatausahaan',
+	  'description' => 'Laporan Penatausahaan',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_menu_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_menu_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+
+	$items['laporan/register'] = array (
+   'title' => 'Register SP2D',
+	  'description' => 'Register SP2D',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['laporan/realisasirek'] = array (
+      'title' => 'Laporan Realisasi Belanja per Rekening',
+	  'description' => 'Laporan Realisasi Belanja',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_rearek_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_rearek_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['laporan/realisasikeg'] = array (
+      'title' => 'Laporan Realisasi Belanja per Kegiatan',
+	  'description' => 'Laporan Realisasi Kegiatan',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_reakeg_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_reakeg_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['laporan/realisasiuk'] = array (
+      'title' => 'Laporan Realisasi Belanja per SKPD',
+	  'description' => 'Laporan Realisasi SKPD',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_reauk_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_reauk_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['laporan/realisasikegsp2d'] = array (
+      'title' => 'Daftar SP2D per Kegiatan',
+	  'description' => 'Daftar SP2D per Kegiatan',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_kegsp2d_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_kegsp2d_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['laporan/realisasisd'] = array (
+      'title' => 'Laporan Realisasi Belanja per Sumber Dana',
+	  'description' => 'Laporan Realisasi Sumber Dana',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_reasd_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_reasd_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['laporan/realisasiurusan'] = array (
+      'title' => 'Laporan Realisasi Belanja per Urusan',
+	  'description' => 'Laporan Realisasi Urusan',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_reaurusan_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_reaurusan_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['laporan/realisasisp2d'] = array (
+      'title' => 'Laporan Realisasi SP2D',
+	  'description' => 'Laporan Realisasi SP2D',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_sp2drek_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_sp2drek_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['laporan/laporan_daftar'] = array (
+      'title' => 'Laporan Daftar Transaksi DTH',
+	  'description' => 'Laporan Daftar Transaksi DTH',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_daftar',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_daftar.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['laporan/laporan_rekapitulasi'] = array (
+      'title' => 'Laporan Rekapitulasi Transaksi RTH',
+	  'description' => 'Laporan Rekapitulasi Transaksi RTH',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'laporan_rekapitulasi',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan_rekapitulasi.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['laporan/laporan2_main'] = array (
+      'title' => 'Laporan 2',
+	  'description' => 'Laporan 2',
+      'page callback' => 'laporan2_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'laporan2_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['laporan/cetak_laporan2'] = array (
+      'title' => 'Cetak Laporan 2',
+	  'description' => 'Cetak Laporan2',
+	  //'title callback' => 'laporanarsip_title_callback',
+      'page callback' => 'cetak_laporan2',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'cetak_laporan2.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+    $items['laporan/kebutuhan'] = array (
+        'title' => 'Laporan Kebutuhan',
+  	  'description' => 'Laporan Kebutuhan',
+  	  //'title callback' => 'laporanarsip_title_callback',
+        'page callback' => 'laporan_kebutuhan_main',
+        //'access arguments' => array ('access content'),
+  	  'access callback' => 'user_is_logged_in',
+        'weight' => 11,
+        'file' => 'laporan_kebutuhan_main.php',
+        'type' => MENU_NORMAL_ITEM,
+      );
+
+    return $items;
+}
+
+function label_bulan_lalu($bulan) {
+//drupal_set_message($bulan);
+if ($bulan==1)
+	return 'Sebelumnya';
+else
+	return date('M', mktime(0, 0, 0, $bulan-1, 10));
+}
+
+function label_bulan_ini($bulan) {
+//drupal_set_message($bulan);
+return date('M', mktime(0, 0, 0, $bulan, 10));
+}

@@ -1,0 +1,188 @@
+<?php
+// $Id$
+ 
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function pad_permission() {
+  return array(
+    'dokumen restitusi pajak' => array(
+      'title' => t('Dokumen restitusi pajak'),
+      'description' => t('Dokumen restitusi pajak.'),
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function pad_menu() {
+
+	$items['padspp/newrek'] = array (
+      'title' => 'SPP PAD | Pilih Rekening',
+	  'description' => 'SPP PAD | Pilih Rekening',
+	  //'title callback' => 'padspp_title_callback',	  
+      'page callback' => 'padspp_newrek_main',
+      'access arguments' => array ('dokumen restitusi pajak'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'padspp_newrek_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['padspp/newpost'] = array (
+      'title' => 'SPP PAD | Baru',
+	  'description' => 'SPP PAD | Rekening',
+	  //'title callback' => 'padspp_title_callback',	  
+      'page callback' => 'padspp_newpost_main',
+      'access arguments' => array ('dokumen restitusi pajak'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'padspp_newpost_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+	$items['padspp/edit'] = array (
+      'title' => 'SPP PAD',
+	  'description' => 'SPP PAD',
+	  //'title callback' => 'padspp_title_callback',	  
+      'page callback' => 'padspp_edit_main',
+      'access arguments' => array ('dokumen restitusi pajak'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'padspp_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['padspparsip'] = array (
+      'title' => 'Daftar SPP PAD',
+	  'description' => 'Daftar SPP PAD',
+	  //'title callback' => 'padspp_arsip_title_callback',	  
+      'page callback' => 'padspp_arsip_main',
+      'access arguments' => array ('dokumen restitusi pajak'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'padspp_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['padspp/delete'] = array (
+      'title' => 'Hapus SPP',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('padspp_delete_form'),
+	  'access arguments' => array ('dokumen restitusi pajak'),
+      'file' => 'padspp_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+
+	$items['padspm/edit'] = array (
+      'title' => 'SPM PAD',
+	  'description' => 'SPM PAD',
+	  //'title callback' => 'padspm_title_callback',	  
+      'page callback' => 'padspm_edit_main',
+      'access arguments' => array ('dokumen restitusi pajak'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'padspm_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['padspmarsip'] = array (
+      'title' => 'Daftar SPM PAD',
+	  'description' => 'Daftar SPM PAD',
+	  //'title callback' => 'padspm_arsip_title_callback',	  
+      'page callback' => 'padspm_arsip_main',
+      'access arguments' => array ('dokumen restitusi pajak'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'padspm_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['padspm/verify'] = array (
+      'title' => 'Verifikasi SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('padspm_verify_form'),
+	  'access arguments' => array ('dokumen restitusi pajak'),
+      'file' => 'padspm_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );
+	
+    $items['padspm/delete'] = array (
+      'title' => 'Hapus SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('padspm_delete_form'),
+	  'access arguments' => array ('dokumen restitusi pajak'),
+      'file' => 'padspm_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+
+	$items['padsp2darsip'] = array (
+      'title' => 'Daftar SP2D PAD',
+	  'description' => 'Daftar SP2D PAD',
+	  //'title callback' => 'padsp2d_arsip_title_callback',	  
+      'page callback' => 'padsp2d_arsip_main',
+      'access arguments' => array ('dokumen restitusi pajak'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'padsp2d_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['padsp2d/edit'] = array (
+      'title' => 'SP2D PAD',
+	  'description' => 'SP2D PAD',
+	  //'title callback' => 'padsp2d_title_callback',	  
+      'page callback' => 'padsp2d_edit_main',
+      'access arguments' => array ('dokumen restitusi pajak'),
+	  //'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'padsp2d_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+    $items['padsp2d/verify'] = array (
+      'title' => 'Verifikasi SP2D',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('padsp2d_verify_form'),
+	  'access arguments' => array ('dokumen restitusi pajak'),
+      'file' => 'padsp2d_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );
+	
+    $items['padsp2d/delete'] = array (
+      'title' => 'Hapus SP2D',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('padsp2d_delete_form'),
+	  'access arguments' => array ('dokumen restitusi pajak'),
+      'file' => 'padsp2d_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+    return $items;
+}
+
+
+function padspp_title_callback() {
+	return t('SPP PAD');
+}
+
+function padspp_arsip_title_callback() {
+    return t('Daftar SPP PAD');
+}
+
+function padspm_title_callback() {
+	return t('SPM PAD');
+}
+
+function padspm_arsip_title_callback() {
+    return t('Daftar SPM PAD');
+}
+
+function padsp2d_title_callback() {
+	return t('SP2D PAD');
+}
+
+function padsp2d_arsip_title_callback() {
+    return t('Daftar SP2D PAD');
+}

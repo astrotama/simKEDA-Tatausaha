@@ -1,0 +1,172 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function gantiuang_perm() {
+    return array(
+        'access penata content',
+		'access laporan penata'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function gantiuang_menu() {
+//ITEM  (DB Tata U)
+	$items['guspp/newkeg'] = array (
+      'title' => 'SPP GU | Pilih Kegiatan',
+	  'description' => 'SPP GU | Pilih Kegiatan',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gantiuangspp_newkeg_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gantiuangspp_newkeg_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['guspp/newspj'] = array (
+      'title' => 'SPP GU | Pilih SPJ',
+	  'description' => 'SPP GU | Pilih SPJ',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gantiuangspp_newspj_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gantiuangspp_newspj_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	 
+	$items['guspp/new'] = array (
+      'title' => 'SPP GU',
+	  'description' => 'SPP GU',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gantiuangspp_new_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gantiuangspp_new_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['guspp/edit'] = array (
+      'title' => 'SPP GU',
+	  'description' => 'SPP GU',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gantiuangspp_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gantiuangspp_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['guspparsip'] = array (
+      'title' => 'Daftar SPP GU',
+	  'description' => 'Daftar SPP GU',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gantiuangspp_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gantiuangspp_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+    $items['guspp/delete'] = array (
+      'title' => 'Hapus SPP',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('gantiuangspp_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gantiuangspp_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );	
+	 
+	$items['guspmarsip'] = array (
+      'title' => 'Daftar SPM GU',
+	  'description' => 'Daftar SPM GU',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gantiuangspm_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gantiuangspm_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['guspm/edit'] = array (
+      'title' => 'SPM GU',
+	  'description' => 'SPM GU',
+	  //'title callback' => 'gantiuang_title_callback',	  
+      'page callback' => 'gantiuangspm_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gantiuangspm_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+    $items['guspm/verify'] = array (
+      'title' => 'Verifikasi SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('gantiuangspm_verify_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gantiuangspm_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );
+	
+    $items['guspm/delete'] = array (
+      'title' => 'Hapus SPM',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('gantiuangspm_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gantiuangspm_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+
+	$items['gusp2darsip'] = array (
+      'title' => 'Daftar SP2D GU',
+	  'description' => 'Daftar SP2D GU',
+	  //'title callback' => 'gantiuangsp2d_arsip_title_callback',	  
+      'page callback' => 'gantiuangsp2d_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gantiuangsp2d_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+	$items['gusp2d/edit'] = array (
+      'title' => 'SP2D GU',
+	  'description' => 'SP2D GU',
+	  //'title callback' => 'gantiuangsp2d_title_callback',	  
+      'page callback' => 'gantiuangsp2d_edit_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'gantiuangsp2d_edit_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );	
+    $items['gusp2d/verify'] = array (
+      'title' => 'Verifikasi SP2D',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('gantiuangsp2d_verify_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gantiuangsp2d_verify_form.php',
+      'type' => MENU_CALLBACK,
+    );
+	
+    $items['gusp2d/delete'] = array (
+      'title' => 'Hapus SP2D',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('gantiuangsp2d_delete_form'),
+      //'access arguments' => array ('desa penghapusan'),
+	  'access arguments' => array ('access content'),
+      'file' => 'gantiuangsp2d_delete_form.php',
+      'type' => MENU_CALLBACK,
+    );		
+    return $items;
+}
+
