@@ -1,0 +1,29 @@
+insert into a_reg_x (dokid, sp2dtgl, sp2dno, gaji,  rutin,  nihil,  restitusi,  pfk,  opd,  uraian,  gajirp, rutinrp, nihilrp, restitusirp, pfkrp)
+select d.dokid, d.sp2dtgl, d.sp2dno, 1 as gaji, 0 as rutin, 0 as nihil, 0 as restitusi, 0 as pfk, u.namauk as opd, d.keperluan as uraian, jumlah as gajirp, 0 as rutinrp, 0 as nihilrp, 0 as restitusirp, 0 as pfkrp
+from dokumen as d inner join unitkerja as u on d.kodeuk=u.kodeuk where d.sp2dok=1 and d.jenisdokumen=3
+order by d.sp2dtgl, d.sp2dno
+
+insert into a_reg_x (dokid, sp2dtgl, sp2dno, gaji,  rutin,  nihil,  restitusi,  pfk,  opd,  uraian,  gajirp, rutinrp, nihilrp, restitusirp, pfkrp)
+select d.dokid, d.sp2dtgl, d.sp2dno, 0 as gaji, 1 as rutin, 0 as nihil, 0 as restitusi, 0 as pfk, u.namauk as opd, d.keperluan as uraian, 0 as gajirp, jumlah as rutinrp, 0 as nihilrp, 0 as restitusirp, 0 as pfkrp
+from dokumen as d inner join unitkerja as u on d.kodeuk=u.kodeuk where d.sp2dok=1 and d.jenisdokumen in (0, 1, 2, 4)
+order by d.sp2dtgl, d.sp2dno
+
+insert into a_reg_x (dokid, sp2dtgl, sp2dno, gaji,  rutin,  nihil,  restitusi,  pfk,  opd,  uraian,  gajirp, rutinrp, nihilrp, restitusirp, pfkrp)
+select d.dokid, d.sp2dtgl, d.sp2dno, 0 as gaji, 0 as rutin, 1 as nihil, 0 as restitusi, 0 as pfk, u.namauk as opd, d.keperluan as uraian,  0 as gajirp, 0 as rutinrp, jumlah as nihilrp, 0 as restitusirp, 0 as pfkrp
+from dokumen as d inner join unitkerja as u on d.kodeuk=u.kodeuk where d.sp2dok=1 and d.jenisdokumen in (5, 7)
+order by d.sp2dtgl, d.sp2dno
+
+insert into a_reg_x (dokid, sp2dtgl, sp2dno, gaji,  rutin,  nihil,  restitusi,  pfk,  opd,  uraian,  gajirp, rutinrp, nihilrp, restitusirp, pfkrp)
+select d.dokid, d.sp2dtgl, d.sp2dno, 0 as gaji, 0 as rutin, 0 as nihil, 1 as restitusi, 0 as pfk, u.namauk as opd, d.keperluan as uraian,  0 as gajirp, 0 as rutinrp,  0 as nihilrp, jumlah as restitusirp, 0 as pfkrp
+from dokumen as d inner join unitkerja as u on d.kodeuk=u.kodeuk where d.sp2dok=1 and d.jenisdokumen=6
+order by d.sp2dtgl, d.sp2dno
+
+insert into a_reg_x (dokid, sp2dtgl, sp2dno, gaji,  rutin,  nihil,  restitusi,  pfk,  opd,  uraian,  gajirp, rutinrp, nihilrp, restitusirp, pfkrp)
+select d.dokid, d.sp2dtgl, d.sp2dno, 0 as gaji, 0 as rutin, 0 as nihil, 0 as restitusi, 1 as pfk, u.namauk as opd, d.keperluan as uraian,  0 as gajirp, 0 as rutinrp, jumlah as nihilrp, 0 as restitusirp, jumlah as pfkrp
+from dokumen as d inner join unitkerja as u on d.kodeuk=u.kodeuk where d.sp2dok=1 and d.jenisdokumen=8
+order by d.sp2dtgl, d.sp2dno
+
+
+insert into a_reg_y (dokid, sp2dtgl, sp2dno, gaji,  rutin,  nihil,  restitusi,  pfk,  opd,  uraian,  gajirp, rutinrp, nihilrp, restitusirp, pfkrp)
+select dokid, sp2dtgl, sp2dno, gaji,  rutin,  nihil,  restitusi,  pfk,  opd,  uraian,  gajirp, rutinrp, nihilrp, restitusirp, pfkrp
+from a_reg_x order by sp2dtgl asc, sp2dno asc

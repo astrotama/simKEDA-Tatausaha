@@ -1,0 +1,1 @@
+update dokumen inner join unitkerja on dokumen.kodeuk=unitkerja.kodeuk set dokumen.penerimanama=bendaharaatasnama, dokumen.penerimabanknama=unitkerja.bendaharabank, dokumen.penerimabankrekening=unitkerja.bendahararekening, dokumen.penerimanpwp=unitkerja.bendaharanpwp where dokumen.jenisdokumen=1 and dokumen.penerimanama is null

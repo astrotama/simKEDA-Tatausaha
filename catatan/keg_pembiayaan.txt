@@ -1,0 +1,8 @@
+delete from kegiatanskpd where kodekeg='201900666666';
+insert into kegiatanskpd (kodekeg, nomorkeg, jenis, tahun, kodepro, kodeuk, kegiatan, total, anggaran, sumberdana2, waktupelaksanaan, latarbelakang, kelompoksasaran, plafon1, plafon2)
+values ('201900666666', 666, 1, 2019, '000', '00', 'Pengeluaran Pembiayaan', 15000000, 15000000, '-', '-', '-', '-', 15000000, 15000000);
+
+delete from anggperkeg where kodekeg='201900666666';
+
+insert into anggperkeg (kodekeg, kodero, uraian, jumlah, anggaran)
+select '201900666666' as kodekeg, kodero, uraian, jumlah, jumlah as anggaran from anggperda where kodero like '62%'

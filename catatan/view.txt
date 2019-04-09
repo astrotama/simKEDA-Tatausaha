@@ -1,0 +1,5 @@
+CREATE ALGORITHM=UNDEFINED DEFINER=`superuser`@`%` SQL SECURITY DEFINER VIEW `q_bendahara_outstanding81` AS select `b`.`kodekeg` AS `kodekeg`,sum(`bi`.`jumlah`) AS `jumlahspj` from (`bendahara81` `b` join `bendaharaitem81` `bi` on((`b`.`bendid` = `bi`.`bendid`))) where ((`b`.`jenis` = 'gu-spj') and (`b`.`iskegiatan` = 1) and (`b`.`sudahproses` = 0)) group by `b`.`kodekeg`;
+
+
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`superuser`@`%` SQL SECURITY DEFINER VIEW `q_kegiatan_outstanding81` AS select `k`.`kodekeg` AS `kodekeg`,`k`.`kodeuk` AS `kodeuk`,`k`.`kegiatan` AS `kegiatan`,`k`.`anggaran` AS `anggaran`,`k`.`total` AS `total`,`b`.`jumlahspj` AS `jumlahspj` from (`kegiatanskpd` `k` join `q_bendahara_outstanding81` `b` on((`k`.`kodekeg` = convert(`b`.`kodekeg` using utf8))));

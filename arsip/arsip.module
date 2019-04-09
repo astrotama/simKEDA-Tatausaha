@@ -1,0 +1,57 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_perm().
+ */
+//onModuleCreationWizard
+function arsip_perm() {
+    return array(
+		'access arsip content'
+	);
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function arsip_menu() {
+
+	$items['spmarsip'] = array (
+      'title' => 'Daftar SPM',
+	  'description' => 'Daftar SPM',
+	  //'title callback' => 'barangjasaspm_arsip_title_callback',	  
+      'page callback' => 'spm_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 11,
+      'file' => 'spm_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['spparsip'] = array (
+      'title' => 'Daftar SPP',
+	  'description' => 'Daftar SPP',
+	  //'title callback' => 'barangjasaspm_arsip_title_callback',	  
+      'page callback' => 'spp_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 21,
+      'file' => 'spp_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	$items['sp2darsip'] = array (
+      'title' => 'Daftar SP2D',
+	  'description' => 'Daftar SP2D',
+	  //'title callback' => 'barangjasaspm_arsip_title_callback',	  
+      'page callback' => 'sp2d_arsip_main',
+      //'access arguments' => array ('access content'),
+	  'access callback' => 'user_is_logged_in',
+      'weight' => 22,
+      'file' => 'sp2d_arsip_main.php',
+      'type' => MENU_NORMAL_ITEM,
+    );
+	
+    return $items;
+}
+
+?>

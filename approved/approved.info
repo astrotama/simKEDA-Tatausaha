@@ -1,0 +1,6 @@
+; $Id$
+name = "Approved"
+description = "tu 18 approved"
+;dependencies[] = 
+core = 7.x
+package="simKEDA"
